@@ -61,7 +61,7 @@ jobs:
           ${{ matrix.constraints && format('CONSTRAINTS={0}', matrix.constraints) || '' }}
         # TODO add the latest tag, maybe somehow via docker/metadata-action
         tags: |
-          okoko/python-torch:${{ steps.build-tag.outputs.tag }}
+          talamus/python-torch:${{ steps.build-tag.outputs.tag }}
         # https://docs.docker.com/build/ci/github-actions/cache/
         cache-from: type=gha,scope=${{ matrix.torch }}-${{ matrix.python }}
         cache-to: type=gha,scope=${{ matrix.torch }}-${{ matrix.python }},mode=max
@@ -107,4 +107,4 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-        repository: okoko/python-torch
+        repository: talamus/python-torch
