@@ -1,4 +1,4 @@
-# okoko/python-torch
+# talamus/python-torch
 
 Base Docker image for python projects needing machine learning framework
 [PyTorch](https://pytorch.org/) package.
