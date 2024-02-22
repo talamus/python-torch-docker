@@ -45,6 +45,9 @@ jobs:
           echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
           echo "created=$(date --utc +%Y-%m-%dT%H:%M:%SZ)" >> $GITHUB_OUTPUT
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
     - uses: actions/checkout@v4
 
     - name: Set up Docker Buildx
@@ -67,6 +70,8 @@ jobs:
     - uses: docker/build-push-action@4a13e500e55cf31b7a5d59a38ab2040ab0f42f56 # v5.1.0
       with:
         context: .
+        platforms: ${{ matrix.platform }}
+        labels: ${{ steps.meta.outputs.labels }}
         push: ${{ github.ref == 'refs/heads/main' }}
         build-args: |
           CREATED=${{ steps.prepare.outputs.created }}
