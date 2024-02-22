@@ -15,18 +15,35 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false  # TODO: Remove. (For debugging the workflow.)
       matrix:
         include:
         - torch: '2.1.2'
           python: '3.11.7'
+          arch: amd64
         - torch: '2.1.2'
           python: '3.11.7-slim'
+          arch: amd64
         - torch: '2.1.2+cpu'
           python: '3.11.7'
           extra-index-url: 'https://download.pytorch.org/whl/cpu'
+          arch: amd64
+        - torch: '2.1.2'
+          python: '3.11.7'
+          arch: arm64
+        - torch: '2.1.2'
+          python: '3.11.7-slim'
+          arch: arm64
+        - torch: '2.1.2+cpu'
+          python: '3.11.7'
+          extra-index-url: 'https://download.pytorch.org/whl/cpu'
+          arch: arm64
     steps:
-    - id: created
-      run: echo "created=$(date --utc +%Y-%m-%dT%H:%M:%SZ)" >> $GITHUB_OUTPUT
+    - id: prepare
+      run: |
+          platform=${{ matrix.platform }}
+          echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
+          echo "created=$(date --utc +%Y-%m-%dT%H:%M:%SZ)" >> $GITHUB_OUTPUT
 
     - uses: actions/checkout@v4
 
@@ -52,7 +69,7 @@ jobs:
         context: .
         push: ${{ github.ref == 'refs/heads/main' }}
         build-args: |
-          CREATED=${{ steps.created.outputs.created }}
+          CREATED=${{ steps.prepare.outputs.created }}
           SOURCE_COMMIT=${{ github.sha }}
           PYTHON=${{ matrix.python }}
           TORCH=${{ matrix.torch }}
