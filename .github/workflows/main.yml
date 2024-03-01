@@ -18,16 +18,16 @@ jobs:
       fail-fast: false  # TODO: Remove. (For debugging the workflow.)
       matrix:
         include:
-        - torch: '2.1.2'
-          python: '3.11.7'
-          arch: amd64
-        - torch: '2.1.2'
-          python: '3.11.7-slim'
-          arch: amd64
-        - torch: '2.1.2+cpu'
-          python: '3.11.7'
-          extra-index-url: 'https://download.pytorch.org/whl/cpu'
-          arch: amd64
+        # - torch: '2.1.2'
+        #   python: '3.11.7'
+        #   arch: amd64
+        # - torch: '2.1.2'
+        #   python: '3.11.7-slim'
+        #   arch: amd64
+        # - torch: '2.1.2+cpu'
+        #   python: '3.11.7'
+        #   extra-index-url: 'https://download.pytorch.org/whl/cpu'
+        #   arch: amd64
         - torch: '2.1.2'
           python: '3.11.7'
           arch: arm64
